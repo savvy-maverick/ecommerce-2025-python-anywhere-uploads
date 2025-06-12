@@ -1,0 +1,69 @@
+{% extends 'base.html'%}
+{% block content%}
+
+
+
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+    <div class="row">
+        <center>
+            <div class="col-8">
+                <h3>Shipped Items</h3>
+<table class="table table table-striped table table-hover table-dark table table-bordered">
+  <thead>
+    
+        <tr>
+            <th scope="col">Order</th>
+            <th scope="col">Price</th>
+            <th scope="col">Customer Email</th>
+            <th scope="col">Date Ordered</th>
+            <th scope="col">Shipped</th>
+        </tr>
+    
+        
+  </thead>
+  <tbody>
+    {% for item in orders %}
+    
+    <tr>
+      
+      <td><a href="{% url 'orders' item.id %}">{{ item.id}}</a></td>
+      <td>${{item.amount_paid}}</td>
+      <td>{{ item.email}}</td>
+      <td>{{ item.date_shipped}}</td>
+      <td>
+            <form method="post">
+                {% csrf_token%}
+                <input type="hidden" name="shipping_status" value="false">
+                <input type="hidden" name="number" value={{item.id}}>
+                <button type="submit" class="btn btn-danger btn-sm">Mark un-shipped</button>
+            </form>
+      </td>
+    </tr>
+
+    
+    
+    {% endfor %}
+    
+  </tbody>
+</table>
+            </div>
+        </center>
+    </div>
+</div>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+{% endblock %}
